@@ -35,16 +35,16 @@ class Task:
 
     def get_reward(self):
         """continue flying (rewarded) or going farther from the the target (penalized)"""
-        reward = 1. - .003 * (abs(self.sim.pose[:3] - self.target_pos)).sum()
+        reward = 1. - .001 * (abs(self.sim.pose[:3] - self.target_pos)).sum()
 
         if (abs(self.sim.pose[0] - self.target_pos[0])) < 0.25:
-            reward += 0.04
+            reward += 0.03
 
         if (abs(self.sim.pose[1] - self.target_pos[1])) < 0.25:
-            reward += 0.04
+            reward += 0.03
 
         if (abs(self.sim.pose[2] - self.target_pos[2])) < 0.25:
-            reward += 0.04
+            reward += 0.03
 
         # punish when crashed before the expected flytime (runtime)
         if self.sim.done is True and self.sim.time < self.sim.runtime:
