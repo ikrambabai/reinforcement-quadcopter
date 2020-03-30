@@ -55,7 +55,7 @@ class Actor:
         loss = k.mean(-action_gradients * actions)
 
         # Define optimizer and training function
-        optimizer = optimizers.Adam()
+        optimizer = optimizers.Adam(lr=0.0001)
         updates_op = optimizer.get_updates(params=self.model.trainable_weights, loss=loss)
         self.training_function = k.function(
             inputs=[self.model.input, action_gradients, k.learning_phase()],
@@ -108,7 +108,7 @@ class Critic:
         self.model = models.Model(inputs=[states, actions], outputs=q_values)
 
         # optimizer, compile model using built-in loss function for training
-        optimizer = optimizers.Adam()
+        optimizer = optimizers.Adam(lr=0.001)
         self.model.compile(optimizer=optimizer, loss='mse')
 
         # Compute action gradients (derivative of Q values w.r.t. to actions)
